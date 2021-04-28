@@ -1,0 +1,122 @@
+<body>
+<header>
+    <section class="upper">
+    <h1><i class="fas fa-cloud-sun fa-3x" style="color:rgb(20, 207, 61)"></i>        Clima</h1>
+    <h1 class="arribaderecha">Chile - {{regionActual.region}}</h1>
+    <ul>
+    <li>
+        <input type="radio"
+        name="unidadTemp"
+        value="temperaturaActual"
+        id="Celsius"
+        (change)="cambioCel()"
+        checked="checked"
+        >
+        <label for="Celsius">Celcius</label>
+    </li>
+
+    <li>
+        <input type="radio"
+        name="unidadTemp"
+        value="temperaturaActual"
+        id="Faren"
+        (change)="cambioFaren()"
+        >
+        <label for="Faren">Farenheit</label>
+    </li>
+    </ul>
+    </section>
+
+
+   <section class="regiones">
+    <div *ngFor="let reg of regiones; let i = index">
+        <input type="radio"
+        name="nombreRegion"
+        value="{{reg.region}}"
+        id="{{reg.region}}"
+        (change)="cambioRadio($event)">
+        <label for="{{reg.region}}">{{reg.region}}</label>
+    </div>
+   </section>
+</header>
+
+<article>
+    <section class="dias" >
+        <div *ngFor="let day of regionActual.semana">
+            <ul (click)="show_form=!show_form">
+            <li>{{day.dia}}</li>
+            <li *ngIf="day.clima==='Lluvioso'"><i class="fas fa-cloud-showers-heavy fa-3x" style="color:rgb(34, 34, 189)"></i></li>
+            <li *ngIf="day.clima==='Soleado'"><i class="fas fa-sun fa-3x" style="color:rgb(207, 164, 20)"></i></li>
+            <li *ngIf="day.clima==='Tormenta'"><i class="fas fa-poo-storm fa-3x" style="color:rgb(41, 41, 46)"></i></li>
+            <li *ngIf="day.clima==='Nublado'"><i class="fas fa-cloud fa-3x" style="color:rgb(144, 144, 148)"></i></li>
+            <li *ngIf="temperaturaActual===true">{{day.temperatura.toFixed(1)}}°C</li>
+            <li *ngIf="temperaturaActual===false">{{((day.temperatura*1.8)+32).toFixed(1)}}°F</li>
+            <li>{{day.clima}}</li>
+            </ul>
+        </div>
+
+        <div *ngIf="show_form">
+            <br><br><br><br><br><br><br><br><br><br><br>
+            <form [formGroup]="formulario" class="myform" (ngSubmit)=agregar()>
+                <div>
+                    <h3>Region</h3>
+                    <select formControlName="controlRegiones" id="reg" >
+                        <option value="{{regi.region}}" *ngFor="let regi of regiones" >{{regi.region}}</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <h3>Estado del Clima</h3>
+                    <label>
+                    <input type="radio" formControlName="controlClima" value="Soleado">Soleado
+                    </label>
+                    <br><br><br>
+                    <label>
+                        <input type="radio" formControlName="controlClima" value="Lluvioso">Lluvioso
+                    </label>
+                    <br><br><br>
+                    <label>
+                        <input type="radio" formControlName="controlClima" value="Nublado">Nublado
+                    </label>
+                    <br><br><br>
+                    <label>
+                        <input type="radio" formControlName="controlClima" value="Tormenta">Tormenta
+                    </label>
+                </div>
+
+                <div>
+                    <h3>Dia de la semana</h3>
+                    <select formControlName="controlDias" id="dias" >
+                        <option value="{{day.dia}}" *ngFor="let day of regionActual.semana" >{{day.dia}}</option>
+                    </select>
+                </div>
+
+                <div>
+                    <h3>Temperatura</h3>
+                    <input type="number" formControlName="controlTemperatura">
+                </div>
+
+                <div>
+                    <h3>Grados</h3>
+                    <label>
+                        <input type="radio" formControlName="controlUnidad" value="Celsius">Celsius
+                        </label>
+                        <br><br><br>
+                        <label>
+                        <input type="radio" formControlName="controlUnidad" value="Farenheit">Farenheit
+                    </label>
+                </div>
+
+                <br><br>
+
+                <div>
+                    <button type="submit">Actualizar</button>
+                </div>
+
+
+            </form>
+        </div>
+        
+    </section>
+</article>
+</body>

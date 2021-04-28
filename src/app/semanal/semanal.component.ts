@@ -183,7 +183,7 @@ export class SemanalComponent implements OnInit {
   show_form:Boolean=false;
 
 
-  formulario:FormGroup;
+  formulario!:FormGroup;
   controlRegiones:FormControl= new FormControl;
   controlClima:FormControl=new FormControl;
   controlDias:FormControl=new FormControl;

@@ -6,7 +6,7 @@ export interface Regiones{
 export interface Dia{
     dia: DiaDeLaSemana,
     clima: Clima,
-    temperatura:Number,
+    temperatura:number,
 }
 export enum Clima{
     Soleado = "Soleado"
